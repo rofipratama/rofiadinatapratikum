@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Game</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            min-height: 100vh;
+            padding: 30px 15px;
+
+            background-image:
+                linear-gradient(
+                    rgba(10, 15, 40, 0.65),
+                    rgba(10, 15, 40, 0.75)
+                ),
+                url("gambarlucu.jpg");
+
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+
+            color: white;
+        }
+
+        h1 {
+            font-size: 38px;
+            color: #ffffff;
+            text-shadow: 0 0 15px #00c8ff;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 17px;
+            color: #e0eaff;
+        }
+
+        button {
+            padding: 13px 20px;
+            margin: 7px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #00c6ff, #0072ff);
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            transition: 0.3s;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            background: linear-gradient(135deg, #7b2ff7, #00c6ff);
+            box-shadow: 0 6px 18px rgba(0, 198, 255, 0.5);
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        h3 {
+            margin-top: 35px;
+            color: #7eeaff;
+            font-size: 22px;
+        }
+
+        #pilihan {
+            margin-top: 20px;
+        }
+
+        #hasil {
+            margin: 25px auto;
+            padding: 20px;
+            max-width: 450px;
+            line-height: 2;
+            font-size: 18px;
+            color: white;
+
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 18px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 30px;
+            }
+
+            button {
+                padding: 12px 14px;
+                font-size: 14px;
+            }
+
+            #hasil {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Game Suit</h1>
+    <p>Pilih jenis permainan:</p>
+
+    <button onclick="pilihGame('batu')">
+        Batu Gunting Kertas
+    </button>
+
+    <button onclick="pilihGame('gajah')">
+        Gajah Orang Semut
+    </button>
+
+    <button onclick="pilihGame('jari')">
+        Suit Jari
+    </button>
+
+    <h3 id="judul">Pilih permainan dahulu</h3>
+
+    <div id="pilihan"></div>
+    <div id="hasil"></div>
+
+    <script>
+        let game = "";
+
+        function pilihGame(nama) {
+            game = nama;
+            let tombol = "";
+
+            if (game == "batu") {
+                document.getElementById("judul").innerHTML =
+                    "Pilih Batu, Gunting, atau Kertas";
+
+                tombol =
+                    '<button onclick="mainSuit(\'batu\')">Batu</button>' +
+                    '<button onclick="mainSuit(\'gunting\')">Gunting</button>' +
+                    '<button onclick="mainSuit(\'kertas\')">Kertas</button>';
+            }
+
+            else if (game == "gajah") {
+                document.getElementById("judul").innerHTML =
+                    "Pilih Gajah, Orang, atau Semut";
+
+                tombol =
+                    '<button onclick="mainSuit(\'gajah\')">Gajah</button>' +
+                    '<button onclick="mainSuit(\'orang\')">Orang</button>' +
+                    '<button onclick="mainSuit(\'semut\')">Semut</button>';
+            }
+
+            else {
+                document.getElementById("judul").innerHTML =
+                    "Pilih Jempol, Telunjuk, atau Kelingking";
+
+                tombol =
+                    '<button onclick="mainSuit(\'jempol\')">👍 Jempol</button>' +
+                    '<button onclick="mainSuit(\'telunjuk\')">☝️ Telunjuk</button>' +
+                    '<button onclick="mainSuit(\'kelingking\')">🤙 Kelingking</button>';
+            }
+
+            document.getElementById("pilihan").innerHTML = tombol;
+            document.getElementById("hasil").innerHTML = "";
+        }
+
+        function mainSuit(pilihan) {
+            let daftar;
+
+            if (game == "batu") {
+                daftar = ["batu", "gunting", "kertas"];
+            }
+
+            else if (game == "gajah") {
+                daftar = ["gajah", "orang", "semut"];
+            }
+
+            else {
+                daftar = ["jempol", "telunjuk", "kelingking"];
+            }
+
+            let komputer = daftar[
+                Math.floor(Math.random() * daftar.length)
+            ];
+
+            let hasil = "";
+
+            if (pilihan == komputer) {
+                hasil = "Seri!";
+            }
+
+            else if (game == "batu") {
+                if (
+                    (pilihan == "batu" && komputer == "gunting") ||
+                    (pilihan == "gunting" && komputer == "kertas") ||
+                    (pilihan == "kertas" && komputer == "batu")
+                ) {
+                    hasil = "Kamu menang!";
+                } else {
+                    hasil = "Kamu kalah!";
+                }
+            }
+
+            else if (game == "gajah") {
+                if (
+                    (pilihan == "gajah" && komputer == "orang") ||
+                    (pilihan == "orang" && komputer == "semut") ||
+                    (pilihan == "semut" && komputer == "gajah")
+                ) {
+                    hasil = "Kamu menang!";
+                } else {
+                    hasil = "Kamu kalah!";
+                }
+            }
+
+            else {
+                if (
+                    (pilihan == "jempol" && komputer == "telunjuk") ||
+                    (pilihan == "telunjuk" && komputer == "kelingking") ||
+                    (pilihan == "kelingking" && komputer == "jempol")
+                ) {
+                    hasil = "Kamu menang!";
+                } else {
+                    hasil = "Kamu kalah!";
+                }
+            }
+
+            document.getElementById("hasil").innerHTML =
+                "Pilihan kamu: " + pilihan + "<br>" +
+                "Pilihan komputer: " + komputer + "<br><br>" +
+                "<b>" + hasil + "</b>";
+        }
+    </script>
+
+</body>
+</html>
